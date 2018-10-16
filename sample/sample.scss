@@ -1,0 +1,105 @@
+$red: #ff0000;
+
+/*
+부모참조선택자
+ */
+div{
+  color:$red;
+  & span{
+    color:$red;
+  }
+  &.div{
+    color:$red;
+  }
+  & span & a{
+    color:$red;
+  }
+}
+
+/*
+불러오기 @import
+ */
+@import 'sample2.scss';
+h1{
+  color:$blue;
+}
+
+/*
+mixin : 반복적으로 사용할 스타일을 하나의 변수로 처리
+선언 : @mixin name{}
+호출 : @include name{}
+*/
+@mixin boxStyle{
+  border:1px solid $red;
+  padding:10px;
+  color:$blue;
+}
+.box{
+  @include boxStyle;
+  background-color:#00ff00;
+  font-size:20px;
+}
+.box2{
+  background-color:#eaeaea;
+  font-weight:bold;
+  @include boxStyle;
+}
+.box3{
+  @include boxStyle;
+}
+
+/*
+@mixin 인수로 활용 가능
+ */
+@mixin style1($color, $size){
+  background-color:$color;
+  font-size:$size;
+  border:$size solid $color;
+}
+.box4{
+  @include style1(#fff064, 10px)
+}
+
+/*
+@mixin 인자에 기본값 설정 가능
+ */
+@mixin style2($size, $color:#e97fe5){
+  background-color:$color;
+  font-size:$size;
+  border:$size solid $color;
+}
+.box5{
+  @include style2(24px)
+}
+.box6{
+  @include style2(12px, #8c8c8c)
+}
+
+/*
+@extend name : 사용했던 스타일을 똑같이 사용하고 싶다면
+ */
+.menu{
+  width:200px;
+  height:100px;
+}
+.menu1{
+  @extend .menu;
+}
+
+/*
+%name : 일부 속성만 바꿔주고 싶을 때
+ */
+%hehehe1{
+  height:500px;
+}
+.menu2{
+  @extend .menu;
+  @extend %hehehe1;
+  color:yellow;
+  a{
+    display:block;
+  }
+  
+}
+
+//http://recoveryman.tistory.com/277
